@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelop.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelop_main.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelop_main.iml" group="RequestEnvelop" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelop_test.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelop_test.iml" group="RequestEnvelop" />
+    </modules>
+  </component>
+</project>

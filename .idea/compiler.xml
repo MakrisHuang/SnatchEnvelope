@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="com.makris.web_main" target="1.8" />
+      <module name="com.makris.web_test" target="1.8" />
+      <module name="RequestEnvelop_main" target="1.8" />
+      <module name="RequestEnvelop_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
