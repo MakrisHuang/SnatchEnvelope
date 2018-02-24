@@ -1,6 +1,9 @@
 package com.makris.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,15 @@ import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.io.IOException;
 
 @SpringBootConfiguration
 @EnableTransactionManagement(
@@ -24,6 +31,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         basePackages = "com.makris.site"
 )
 public class ApplicationConfiguration {
+    private static final Logger logger = LogManager.getLogger(ApplicationConfiguration.class);
+
     @Autowired
     ResourceLoader resourceLoader;
 
@@ -60,6 +69,7 @@ public class ApplicationConfiguration {
     public BasicDataSource basicDataSource(){
         BasicDataSource bds = new BasicDataSource();
         bds.setDriverClassName("com.mysql.jdbc.Driver");
+        bds.setUrl("jdbc:mysql://localhost:3306/RequestEnvelop");
         bds.setUsername("root");
         bds.setPassword("password");
         bds.setMaxActive(255);
@@ -69,12 +79,21 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactoryBean(){
+    public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException{
         SqlSessionFactoryBean sqlSessionFactoryBean =
                 new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(basicDataSource());
-        Resource resource = resourceLoader.getResource("classpath:/com/makris/mybatis/mybatis-config.xml");
-        sqlSessionFactoryBean.setConfigLocation(resource);
+
+        // Set MyBatis Configuration file
+        sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
+
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resolver.getResources("classpath:/sqlMapper/*.xml");
+        logger.debug("get resource");
+        logger.debug(resources);
+        sqlSessionFactoryBean.setMapperLocations(resources);
+
+
         return sqlSessionFactoryBean;
     }
 
@@ -90,9 +109,9 @@ public class ApplicationConfiguration {
     public MapperScannerConfigurer mapperScannerConfigurer(){
         MapperScannerConfigurer msc =
                 new MapperScannerConfigurer();
-        msc.setBasePackage("com.makris.site.sqlMapper");
+        msc.setBasePackage("com.makris.site.mapper");
         msc.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
-        msc.setAnnotationClass(Repository.class);
+        msc.setAnnotationClass(Mapper.class);
         return msc;
     }
 }
