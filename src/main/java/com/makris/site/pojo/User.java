@@ -3,11 +3,20 @@ package com.makris.site.pojo;
 import java.util.List;
 
 public class User {
+    private long id;
     private String username;
     private String password;
     private Integer money;
     private Integer remainTimes;
     private List<Envelop> envelops;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
