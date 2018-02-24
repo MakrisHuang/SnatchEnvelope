@@ -16,6 +16,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 import java.nio.charset.StandardCharsets;
 
@@ -44,6 +46,23 @@ public class ApplicationConfiguration {
     }
 
     @Bean
+    public LocalValidatorFactoryBean localValidatorFactoryBean()
+    {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setValidationMessageSource(this.messageSource());
+        return validator;
+    }
+
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor()
+    {
+        MethodValidationPostProcessor processor =
+                new MethodValidationPostProcessor();
+        processor.setValidator(this.localValidatorFactoryBean());
+        return processor;
+    }
+
+    @Bean
     public BasicDataSource basicDataSource(){
         BasicDataSource bds = new BasicDataSource();
         bds.setDriverClassName("com.mysql.jdbc.Driver");
@@ -60,7 +79,7 @@ public class ApplicationConfiguration {
         SqlSessionFactoryBean sqlSessionFactoryBean =
                 new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(basicDataSource());
-        Resource resource = resourceLoader.getResource("classpath:/mybatis/mybatis-com.makris.config.xml");
+        Resource resource = resourceLoader.getResource("classpath:/com/makris/mybatis/mybatis-config.xml");
         sqlSessionFactoryBean.setConfigLocation(resource);
         return sqlSessionFactoryBean;
     }
@@ -77,7 +96,7 @@ public class ApplicationConfiguration {
     public MapperScannerConfigurer mapperScannerConfigurer(){
         MapperScannerConfigurer msc =
                 new MapperScannerConfigurer();
-        msc.setBasePackage("com.makris");
+        msc.setBasePackage("com.makris.site.sqlMapper");
         msc.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
         msc.setAnnotationClass(Repository.class);
         return msc;
