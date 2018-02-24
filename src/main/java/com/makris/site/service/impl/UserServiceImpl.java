@@ -20,10 +20,23 @@ public class UserServiceImpl implements UserService{
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
+    public User findUserByName(String username) {
+        return userMapper.findUserByName(username);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW,  isolation = Isolation.READ_COMMITTED)
     public int insertUser(User user) {
-        logger.info("Retrieve user from UserService");
-        logger.info(user);
         return userMapper.insertUser(user);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateUser(user);
+    }
+
+    @Override
+    public int deleteUser(long id) {
+        return userMapper.deleteUser(id);
     }
 }

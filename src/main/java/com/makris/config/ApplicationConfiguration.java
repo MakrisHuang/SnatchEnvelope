@@ -87,12 +87,10 @@ public class ApplicationConfiguration {
         // Set MyBatis Configuration file
         sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
 
+        // Find corresponding mapper.xml files
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath:/sqlMapper/*.xml");
-        logger.debug("get resource");
-        logger.debug(resources);
         sqlSessionFactoryBean.setMapperLocations(resources);
-
 
         return sqlSessionFactoryBean;
     }

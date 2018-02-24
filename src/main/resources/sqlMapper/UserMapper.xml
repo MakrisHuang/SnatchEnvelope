@@ -3,9 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.makris.site.mapper.UserMapper">
+    <resultMap id="userMap" type="user">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="money" column="money"/>
+        <result property="remainTimes" column="remainTimes"/>
+        <collection property="envelopes" column="id"
+                    select="com.makris.site.mapper.EnvelopeMapper.getEnvelopeByUserId"/>
+    </resultMap>
 
-    <insert id="insertUser" parameterType="com.makris.site.pojo.User">
+    <select id="findUserByName" parameterType="java.lang.String" resultMap="userMap">
+        select id, username, money, remainTimes from User where username = #{username}
+    </select>
+
+    <insert id="insertUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
         insert into User (username, password, money, remainTimes)
         values(#{username}, #{password}, #{money}, #{remainTimes})
     </insert>
+
+    <update id="updateUser" parameterType="user">
+        update User set username = #{username},
+            money = #{money}, remainTimes = #{remainTimes}
+            where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="long">
+        delete from User where id = #{id}
+    </delete>
 </mapper>

@@ -1,14 +1,15 @@
 package com.makris.site.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable{
     private long id;
     private String username;
     private String password;
     private Integer money;
     private Integer remainTimes;
-    private List<Envelop> envelops;
+    private List<Envelope> envelopes;
 
     public long getId() {
         return id;
@@ -50,11 +51,11 @@ public class User {
         this.remainTimes = remainTimes;
     }
 
-    public List<Envelop> getEnvelops() {
-        return envelops;
+    public List<Envelope> getEnvelopes() {
+        return envelopes;
     }
 
-    public void setEnvelops(List<Envelop> envelops) {
-        this.envelops = envelops;
+    public void setEnvelopes(List<Envelope> envelopes) {
+        this.envelopes = envelopes;
     }
 }

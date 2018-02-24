@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.makris.site.mapper.EnvelopeMapper">
+    <resultMap id="envelopeMap" type="envelope">
+        <id property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="totalPrice" column="totalPrice"/>
+        <result property="unitPrice" column="unitPrice"/>
+        <result property="sendDate" column="sendDate"/>
+        <result property="totalAmount" column="totalAmount"/>
+        <result property="remainAmount" column="remainAmount"/>
+        <result property="version" column="version"/>
+        <result property="note" column="note"/>
+    </resultMap>
+    <insert id="insertEnvelope" parameterType="envelope"  useGeneratedKeys="true" keyProperty="id">
+        insert into Envelope (userId, totalPrice, unitPrice, sendDate,
+                              totalAmount, remainAmount, version, note)
+                values(#{userId}, #{totalPrice}, #{unitPrice}, #{sendDate},
+                       #{totalAmount}, #{remainAmount}, #{version}, #{note})
+    </insert>
+
+    <select id="getEnvelopeByUserId" resultMap="envelopeMap" parameterType="long">
+        select * from Envelope where userId = #{id}
+    </select>
+
+    <select id="getEnvelopeById" resultMap="envelopeMap" parameterType="long">
+        select * from Envelope where id = #{id}
+    </select>
+
+    <!-- 扣減紅包-->
+    <update id="decreaseEnvelope" parameterType="long">
+        update Envelope set remainAmount = remainAmount - 1 where id = #{id}
+    </update>
+</mapper>
