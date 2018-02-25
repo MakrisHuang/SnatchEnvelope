@@ -24,7 +24,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(value = "com.*",
+@ComponentScan(basePackages = "com.makris.site",
         useDefaultFilters = false,
         includeFilters =
         {@ComponentScan.Filter(type = FilterType.ANNOTATION,

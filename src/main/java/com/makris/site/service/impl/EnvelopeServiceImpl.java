@@ -34,7 +34,7 @@ public class EnvelopeServiceImpl implements EnvelopeService{
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public int decreaseEnvelope(long id) {
-        return envelopeMapper.decreaseEnvelope(id);
+    public int decreaseEnvelope(long id, int version) {
+        return envelopeMapper.decreaseEnvelope(id, version);
     }
 }

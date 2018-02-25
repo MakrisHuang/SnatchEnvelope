@@ -26,11 +26,14 @@
     </select>
 
     <select id="getEnvelopeById" resultMap="envelopeMap" parameterType="long">
-        select * from Envelope where id = #{id}
+        select * from Envelope where id = #{id} for update;
     </select>
 
     <!-- 扣減紅包-->
-    <update id="decreaseEnvelope" parameterType="long">
-        update Envelope set remainAmount = remainAmount - 1 where id = #{id}
+    <update id="decreaseEnvelope">
+        update Envelope
+        set remainAmount = remainAmount - 1,
+            version = version + 1
+        where id = #{id} and version = #{version}
     </update>
 </mapper>

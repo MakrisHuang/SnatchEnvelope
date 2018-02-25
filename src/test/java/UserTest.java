@@ -23,12 +23,16 @@ public class UserTest {
 
     @Test
     public void insertUser(){
-        User user = new User();
-        user.setUsername("User");
-        user.setPassword("password");
-        user.setMoney(100);
-        user.setRemainTimes(5);
-        int count = userService.insertUser(user);
+        int count = 0;
+        for (int i = 1; i <= 30000; i++) {
+            User user = new User();
+            user.setId(i);
+            user.setUsername("User");
+            user.setPassword("password");
+            user.setMoney(100);
+            user.setRemainTimes(5);
+            count = userService.insertUser(user);
+        }
         assertEquals(count, 1);
     }
 

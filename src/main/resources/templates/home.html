@@ -6,18 +6,18 @@
 
     <script th:inlone="javascript">
         /*<![CDATA[*/
-        // $(document).ready(function(){
-        //     var max = 30000;
-        //     for (var i = 1; i <= max; i++){
-        //         $.post({
-        //             url: "./snatchEnvelope?envelopeId=1&userId=" + i,
-        //             success: function (result) {
-        //                 console.log("搶紅包結果");
-        //                 console.log(result);
-        //             }
-        //         });
-        //     }
-        // });
+        $(document).ready(function(){
+            var max = 30000;
+            for (var i = 1; i <= max; i++){
+                $.get({
+                    url: "./snatchEnvelope?envelopeId=1&userId=" + i,
+                    success: function (result) {
+                        console.log("搶紅包結果");
+                        console.log(result);
+                    }
+                });
+            }
+        });
         /*]]>*/
     </script>
 </head>

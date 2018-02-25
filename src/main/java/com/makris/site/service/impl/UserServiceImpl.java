@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService{
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW,  isolation = Isolation.READ_COMMITTED)
     public User findUserByName(String username) {
         return userMapper.findUserByName(username);
     }
@@ -31,11 +32,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW,  isolation = Isolation.READ_COMMITTED)
     public int updateUser(User user) {
         return userMapper.updateUser(user);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW,  isolation = Isolation.READ_COMMITTED)
     public int deleteUser(long id) {
         return userMapper.deleteUser(id);
     }
