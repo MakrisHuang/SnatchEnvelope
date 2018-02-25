@@ -16,7 +16,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -27,7 +27,7 @@ repositories {
 
 dependencies {
     // Spring Boot
-    compile "org.springframework.boot:spring-boot-starter-web"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.3.3.RELEASE'
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.2.0'

@@ -11,6 +11,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -18,6 +19,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.io.IOException;
@@ -28,7 +30,10 @@ import java.io.IOException;
         order = Ordered.HIGHEST_PRECEDENCE
 )
 @ComponentScan(
-        basePackages = "com.makris.site"
+        basePackages = "com.makris.site",
+        useDefaultFilters = false,
+        includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION,
+        value = {Service.class})}
 )
 public class ApplicationConfiguration {
     private static final Logger logger = LogManager.getLogger(ApplicationConfiguration.class);
@@ -112,6 +117,4 @@ public class ApplicationConfiguration {
         msc.setAnnotationClass(Mapper.class);
         return msc;
     }
-
-
 }
