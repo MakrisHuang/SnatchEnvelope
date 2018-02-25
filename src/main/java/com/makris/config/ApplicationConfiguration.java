@@ -112,4 +112,6 @@ public class ApplicationConfiguration {
         msc.setAnnotationClass(Mapper.class);
         return msc;
     }
+
+
 }

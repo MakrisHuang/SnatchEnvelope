@@ -22,6 +22,8 @@ public class UserSnatchEnvelope implements Serializable{
         this.note = note;
     }
 
+    public UserSnatchEnvelope(){}
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

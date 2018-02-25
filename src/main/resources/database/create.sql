@@ -32,7 +32,7 @@ CREATE TABLE UserSnatchEnvelope(
   grabTime TIMESTAMP NOT NULL,
   note VARCHAR(255) NULL,
   CONSTRAINT UserSnatchEnvelope_Envelope FOREIGN KEY (envelopeId)
-    REFERENCES Envelope (id),
+    REFERENCES Envelope (id) ON DELETE CASCADE ,
   CONSTRAINT UserSnatchEnvelope_User FOREIGN KEY (userId)
-    REFERENCES User (id)
+    REFERENCES User (id) ON DELETE CASCADE
 ) ENGINE = InnoDB;

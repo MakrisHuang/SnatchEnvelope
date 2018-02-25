@@ -69,7 +69,7 @@ public class EnvelopeTest {
     }
 
     @Test
-    public void decreasEnvelope(){
+    public void decreaseEnvelope(){
         User user = new User();
         user.setUsername("User");
         user.setPassword("password");
