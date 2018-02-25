@@ -16,6 +16,9 @@ public class Envelope implements Serializable{
     private Integer version;
     private String note;
 
+    public Envelope() {
+    }
+
     public Envelope(Long userId, Double totalPrice, Double unitPrice,
                     Timestamp sendDate, Integer totalAmount, Integer remainAmount,
                     Integer version, String note) {

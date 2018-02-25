@@ -9,7 +9,7 @@
         <result property="password" column="password"/>
         <result property="money" column="money"/>
         <result property="remainTimes" column="remainTimes"/>
-        <collection property="envelopes" column="id"
+        <association property="envelope" column="id"
                     select="com.makris.site.mapper.EnvelopeMapper.getEnvelopeByUserId"/>
     </resultMap>
 

@@ -28,7 +28,6 @@ public class UserTest {
         user.setPassword("password");
         user.setMoney(100);
         user.setRemainTimes(5);
-        user.setEnvelopes(null);
         int count = userService.insertUser(user);
         assertEquals(count, 1);
     }
@@ -40,7 +39,6 @@ public class UserTest {
         user.setPassword("password");
         user.setMoney(50);
         user.setRemainTimes(10);
-        user.setEnvelopes(null);
         int result = userService.insertUser(user);
         User user2 = userService.findUserByName("User2");
         assertEquals(user2.getUsername(), user.getUsername());
@@ -53,7 +51,6 @@ public class UserTest {
         user.setPassword("password");
         user.setMoney(50);
         user.setRemainTimes(105);
-        user.setEnvelopes(null);
         userService.insertUser(user);
         User user2 = userService.findUserByName(user.getUsername());
         int result = userService.deleteUser(user2.getId());
@@ -69,7 +66,6 @@ public class UserTest {
         user.setPassword("password");
         user.setMoney(50);
         user.setRemainTimes(105);
-        user.setEnvelopes(null);
         userService.insertUser(user);
 
         user.setUsername("Updated User");
