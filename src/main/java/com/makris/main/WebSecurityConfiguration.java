@@ -14,7 +14,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/**").permitAll()
+                .antMatchers("/", "/home").permitAll()
                 .anyRequest()       // 對象為所有網址
                 .authenticated()    // 存取必須通過驗證
                 .and()

@@ -1,29 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
-
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        // $(document).ready(function(){
-        //     var max = 30000;
-        //     for (var i = 1; i <= max; i++){
-        //         $.get({
-        //             url: "./snatchEnvelopeByRedis?envelopeId=1&userId=" + i,
-        //             success: function (result) {
-        //                 console.log("搶紅包結果");
-        //                 console.log(result);
-        //             }
-        //         });
-        //     }
-        // });
-        /*]]>*/
-    </script>
+    <title>Request Envelope</title>
 </head>
 <body>
 <h1>Welcome!</h1>
 
-<p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+<p>Click <a th:href="@{/hello}">here</a> to start snatching envelope.</p>
 </body>
 </html>
