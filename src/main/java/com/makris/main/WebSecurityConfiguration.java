@@ -20,6 +20,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()        // 若未通過驗證，自動產生login表單
                 .loginPage("/login")
+                .failureForwardUrl("/error")
                 .permitAll()
                 .and()
                 .logout()

@@ -90,7 +90,7 @@ public class EnvelopeTest {
         envelopeService.insertEnvelope(envelope);
 
         Envelope insertedEnvelope = envelopeService.getEnvelopeByUserId(userId);
-        envelopeService.decreaseEnvelope(insertedEnvelope.getId());
+        envelopeService.decreaseEnvelope(insertedEnvelope.getId(), insertedEnvelope.getVersion());
 
         Envelope decreasedEnvelope = envelopeService.getEnvelopeById(insertedEnvelope.getId());
         Integer decreasedAmount = insertedEnvelope.getRemainAmount() - 1;

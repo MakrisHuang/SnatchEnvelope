@@ -4,12 +4,17 @@ import com.makris.site.mapper.UserSnatchEnvelopeMapper;
 import com.makris.site.pojo.Envelope;
 import com.makris.site.pojo.UserSnatchEnvelope;
 import com.makris.site.service.EnvelopeService;
+import com.makris.site.service.RedisEnvelopeService;
 import com.makris.site.service.UserSnatchEnvelopeService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -17,6 +22,8 @@ import java.util.Date;
 @Service
 @Transactional
 public class UserSnatchEnvelopeServiceImpl implements UserSnatchEnvelopeService{
+    private static final Logger logger = LogManager.getLogger(UserSnatchEnvelopeServiceImpl.class);
+
     @Autowired
     EnvelopeService envelopeService;
 
@@ -52,5 +59,59 @@ public class UserSnatchEnvelopeServiceImpl implements UserSnatchEnvelopeService{
             }
         }
         return FAILED;
+    }
+
+    @Autowired
+    private RedisTemplate redisTemplate = null;
+
+    @Autowired
+    private RedisEnvelopeService redisEnvelopeService = null;
+
+    // Lua腳本
+    String LuaScript = "local listKey = 'envelope_list_'..KEYS[1] \n" // KEYS[1]: 紅包id
+            + "local envelope = 'envelope_'..KEYS[1] \n"
+            + "local stock = tonumber(redis.call('hget', envelope, 'stock'))\n"
+            + "if stock <= 0 then return 0 end \n"
+            + "stock = stock - 1 \n"
+            + "redis.call('hset', envelope, 'stock', tostring(stock)) \n"
+            + "redis.call('rpush', listKey, ARGV[1]) \n" // ARGV[1]: userId-currentTime
+            + "if stock == 0 then return 2 end \n"
+            + "return 1 \n";
+    // 用以下變數儲存Redis返回的32位元SHA1編碼，使用他去執行緩存的Lua腳本
+    String sha1 = null;
+
+    @Override
+    public long grabEnvelopeByRedis(long envelopeId, long userId) {
+        // 當前搶紅包用戶和日期訊息
+        String args = userId + "-" + System.currentTimeMillis();
+        Long result = null;
+        Jedis jedis = (Jedis)redisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+        try{
+            // 如果腳本沒有加載過，那麼進行加載，這樣就會返回一個sha1編碼
+            if (sha1 == null){
+                sha1 = jedis.scriptLoad(LuaScript);
+            }
+            // 執行腳本並返回結果
+            Object res = jedis.evalsha(sha1, 1, envelopeId + "", args);
+            result = (Long) res;
+            // 返回2時為最後一個紅包，此時將搶紅包資訊透過Async保存到資料庫中
+            if (result == 2){
+                logger.info("紅包id: " + envelopeId);
+                // 獲取單個小紅包金額
+                String unitPriceStr = jedis.hget("envelope_" + envelopeId, "unitPrice");
+
+                // 觸發保存資料庫操作
+                Double unitPrice = Double.parseDouble(unitPriceStr);
+//                logger.info("unitPrice: " + unitPrice);
+//                logger.info("Thread_name = " + Thread.currentThread().getName());
+                redisEnvelopeService.saveUserSnatchEnvelopeByRedis(envelopeId, unitPrice);
+            }
+        } finally {
+            // 確保jedis順利關閉
+            if (jedis != null && jedis.isConnected()){
+                jedis.close();
+            }
+        }
+        return result;
     }
 }

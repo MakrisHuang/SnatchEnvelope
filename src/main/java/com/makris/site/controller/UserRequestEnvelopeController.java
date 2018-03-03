@@ -27,4 +27,16 @@ public class UserRequestEnvelopeController {
         resultMap.put("message", flag ? "搶紅包成功" : "搶紅包失敗");
         return resultMap;
     }
+
+    @RequestMapping(value = "snatchEnvelopeByRedis", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> snatchEnvelopeByRedis(@RequestParam("envelopeId") long envelopeId,
+                                                     @RequestParam("userId") long userId){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        long result = userSnatchEnvelopeService.grabEnvelopeByRedis(envelopeId, userId);
+        boolean flag = result > 0;
+        resultMap.put("result", flag);
+        resultMap.put("message", flag ? "搶紅包成功": "搶紅包失敗");
+        return resultMap;
+    }
 }

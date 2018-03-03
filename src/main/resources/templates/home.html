@@ -4,20 +4,20 @@
     <title>Spring Security Example</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
 
-    <script th:inlone="javascript">
+    <script th:inline="javascript">
         /*<![CDATA[*/
-        $(document).ready(function(){
-            var max = 30000;
-            for (var i = 1; i <= max; i++){
-                $.get({
-                    url: "./snatchEnvelope?envelopeId=1&userId=" + i,
-                    success: function (result) {
-                        console.log("搶紅包結果");
-                        console.log(result);
-                    }
-                });
-            }
-        });
+        // $(document).ready(function(){
+        //     var max = 30000;
+        //     for (var i = 1; i <= max; i++){
+        //         $.get({
+        //             url: "./snatchEnvelopeByRedis?envelopeId=1&userId=" + i,
+        //             success: function (result) {
+        //                 console.log("搶紅包結果");
+        //                 console.log(result);
+        //             }
+        //         });
+        //     }
+        // });
         /*]]>*/
     </script>
 </head>
