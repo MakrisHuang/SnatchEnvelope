@@ -51,4 +51,7 @@ dependencies {
     // Cache
     compile group: 'org.springframework.data', name: 'spring-data-redis', version: '1.8.6.RELEASE'
     compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
+
+    // Front-end
+    compile group: 'org.webjars', name: 'angularjs', version: '1.6.6'
 }
