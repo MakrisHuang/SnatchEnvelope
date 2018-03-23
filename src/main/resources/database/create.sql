@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS RequestEnvelop;
-CREATE DATABASE RequestEnvelop;
-USE RequestEnvelop;
+DROP DATABASE IF EXISTS RequestEnvelope;
+CREATE DATABASE RequestEnvelope;
+USE RequestEnvelope;
 
 CREATE TABLE User(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

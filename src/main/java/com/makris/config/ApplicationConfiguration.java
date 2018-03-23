@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.AdviceMode;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -52,12 +51,15 @@ import java.util.concurrent.Executor;
 )
 @EnableAsync
 @EnableCaching
-public class ApplicationConfiguration extends AsyncSupportConfigurer{
+@PropertySource("classpath:/config/application.properties")
+public class ApplicationConfiguration extends AsyncSupportConfigurer implements EnvironmentAware{
     private static final Logger logger = LogManager.getLogger(ApplicationConfiguration.class);
     private static final Logger schedulingLogger = LogManager.getLogger(logger.getName() + ".[scheduling]");
 
     @Autowired
     ResourceLoader resourceLoader;
+
+    Environment env;
 
 //    @Bean
 //    public MessageSource messageSource(){
@@ -91,10 +93,14 @@ public class ApplicationConfiguration extends AsyncSupportConfigurer{
     @Bean
     public BasicDataSource basicDataSource(){
         BasicDataSource bds = new BasicDataSource();
-        bds.setDriverClassName("com.mysql.jdbc.Driver");
-        bds.setUrl("jdbc:mysql://localhost:3306/RequestEnvelop");
-        bds.setUsername("root");
-        bds.setPassword("password");
+        bds.setDriverClassName(env.getProperty("SPRING_DRIVER_NAME"));
+        String host = env.getProperty("SPRING_DATABASE_HOST");
+        String port = env.getProperty("SPRING_DATABASE_PORT");
+        String dbName = env.getProperty("SPRING_DATABASE_NAME");
+        String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+        bds.setUrl(jdbcUrl);
+        bds.setUsername(env.getProperty("SPRING_DATASOURCE_USERNAME"));
+        bds.setPassword(env.getProperty("SPRING_DATASOURCE_PASSWORD"));
         bds.setMaxActive(255);
         bds.setMaxIdle(5);
         bds.setMaxWait(1000);
@@ -103,6 +109,7 @@ public class ApplicationConfiguration extends AsyncSupportConfigurer{
 
     @Bean
     public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException{
+
         SqlSessionFactoryBean sqlSessionFactoryBean =
                 new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(basicDataSource());
@@ -114,6 +121,7 @@ public class ApplicationConfiguration extends AsyncSupportConfigurer{
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath:/sqlMapper/*.xml");
         sqlSessionFactoryBean.setMapperLocations(resources);
+
 
         return sqlSessionFactoryBean;
     }
@@ -188,5 +196,10 @@ public class ApplicationConfiguration extends AsyncSupportConfigurer{
         cacheNames.add("redisCacheManager");
         cacheManager.setCacheNames(cacheNames);
         return cacheManager;
+    }
+
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.env = environment;
     }
 }
