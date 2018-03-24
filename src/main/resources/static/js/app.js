@@ -2,7 +2,7 @@ var app = angular.module('RequestEnvelope', []);
 app.controller('SnatchEnvelopeController', ['$scope', '$http', function($scope, $http){
     $scope.users = [];
     $scope.numOfUser =  2;
-    $scope.numOfRedEnvelopeRequested = 5000;
+    $scope.numOfRedEnvelopeRequested = 2000;
 
     $scope.updateUsersInfo = function(){
         $scope.users = [];
@@ -36,7 +36,7 @@ app.controller('SnatchEnvelopeController', ['$scope', '$http', function($scope, 
         $("input").prop('disabled', false);
         $scope.updateUsersInfo();
 
-        var resetUrl = "http://localhost:8080/resetRedisForSnatchEnvelope";
+        var resetUrl = "http://snatchenvelope-env.us-east-2.elasticbeanstalk.com/resetRedisForSnatchEnvelope";
         $http.get(resetUrl).then(function(response){
            console.log("[resetRedis]: ");
            console.log(response.data);
@@ -46,7 +46,7 @@ app.controller('SnatchEnvelopeController', ['$scope', '$http', function($scope, 
 
     $scope.snatchEnvelope = function(userIds){
         userIds.forEach(function(userId){
-            var url = "http://localhost:8080/snatchEnvelopeByRedis?envelopeId=1&userId=" + userId;
+            var url = "http://snatchenvelope-env.us-east-2.elasticbeanstalk.com/snatchEnvelopeByRedis?envelopeId=1&userId=" + userId;
             $http.get(url).then(function(response){
                 console.log(response.data);
 
@@ -56,14 +56,16 @@ app.controller('SnatchEnvelopeController', ['$scope', '$http', function($scope, 
                 var userIndex = Math.floor((userId - 1) / $scope.numOfRedEnvelopeRequested);
                 $scope.users[userIndex].results.push(response.data);
 
-                if (response.data["data"] === true) {
+                if (response.data["result"] === true) {
                     // update user info
                     $scope.users[userIndex].remainingEnvelopes -= 1;
                     $scope.users[userIndex].obtainedEnvelopes += 1;
 
                     // check if enveloped are all obtained
                     // if so, then record elapsed time
-                    if ($scope.users[userIndex].remainingEnvelopes === 0) {
+
+                    if (($scope.users[userIndex].remainingEnvelopes / $scope.numOfRedEnvelopeRequested < 0.4) &&
+                        $scope.users[userIndex].timeElapsed === null) {
                         $scope.users[userIndex].timeElapsed =
                             $scope.calculateTimeElapsed($scope.users[userIndex].timeStart)
                     }
