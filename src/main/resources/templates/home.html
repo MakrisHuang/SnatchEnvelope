@@ -1,113 +1,131 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Request Envelope</title>
-    <!--Bootstrap and jquery-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-          integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-          crossorigin="anonymous"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/home.css}"></link>
-</head>
-<body>
-    <header>
-        <div class="collapse bg-dark" id="navbarHeader">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 col-md-7 py-4">
-                        <h4 class="text-white">About</h4>
-                        <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-                    </div>
-                    <div class="col-sm-4 offset-md-1 py-4">
-                        <h4 class="text-white">Contact</h4>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                            <li><a href="#" class="text-white">Like on Facebook</a></li>
-                            <li><a href="#" class="text-white">Email me</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="navbar navbar-dark bg-dark box-shadow">
-            <div class="container d-flex justify-content-between">
-                <a href="#" class="navbar-brand d-flex align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                    <strong>Album</strong>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </div>
-    </header>
-    <main role="main">
+    <head>
+        <title>Request Envelope</title>
+        <!--Bootstrap and jquery-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+              integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+              crossorigin="anonymous"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" th:href="@{/css/home.css}"></link>
 
-        <section class="jumbotron text-center">
-            <div class="container">
-                <h1 class="jumbotron-heading">Album example</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
-                <p>
-                    <a th:href="@{/requestEnvelope}" class="btn btn-primary my-2">Main call to action</a>
-                </p>
-            </div>
-        </section>
-
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]"
-                                 src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22508%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20508%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1625603bb68%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1625603bb68%22%3E%3Crect%20width%3D%22508%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22169.3203125%22%20y%3D%22123.73125%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;"></img>
-                            <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
+        <!-- icon -->
+        <link rel="stylesheet" th:href="@{/css/open-iconic/font/css/open-iconic-bootstrap.css}"></link>
+    </head>
+    <body>
+        <header>
+            <div class="collapse bg-dark" id="navbarHeader">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-md-7 py-4">
+                            <h4 class="text-white">About Me</h4>
+                            <p class="text-muted">
+                                英文名Makris，喜好嘗試新的事物。最近剛從行動端走向後端工程師，最近剛要退伍。雖然在網頁上開發經驗不多，
+                                但立志成為Java 後端高手。在後端領域對於系統架構特別有興趣，像是網站伸縮、性能、擴展性及安全等，
+                                希冀能在人生有限的時間內成為系統架構師。
+                                人生格言：Be Realistic, Demand Impossible
+                            </p>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]"
-                                 src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22508%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20508%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1625603bb68%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1625603bb68%22%3E%3Crect%20width%3D%22508%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22169.3203125%22%20y%3D%22123.73125%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;"></img>
-                            <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]"
-                                 src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22508%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20508%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1625603bb68%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1625603bb68%22%3E%3Crect%20width%3D%22508%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22169.3203125%22%20y%3D%22123.73125%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;"></img>
-                            <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
+                        <div class="col-sm-4 offset-md-1 py-4">
+                            <h4 class="text-white">Contact</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="https://github.com/MakrisHuang" class="text-white">Follow on Github</a></li>
+                                <li><a href="https://www.facebook.com/vallwesture.huang" class="text-white">Like on Facebook</a></li>
+                                <li><a href="vallwesture@gmail.com" class="text-white">Email me</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
-</body>
+            <div class="navbar navbar-dark bg-danger box-shadow">
+                <div class="container d-flex justify-content-between">
+                    <a href="#" class="navbar-brand d-flex align-items-center">
+                        <span class="oi oi-envelope-open" style="margin-right: 10px"></span>
+                        <strong>Snatch Red Envelope</strong>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <main role="main">
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <h1 class="jumbotron-heading">模擬線上多人搶紅包</h1>
+                    <p class="lead text-muted">
+                        這是一個模擬多人在線上，搶票或是搶商品的網站；本網站採用流行的SSM框架（Spring MVC + Spring + MyBatis），
+                        並使用Redis為暫存伺服器，來快速響應使用者需求，並也能在大量請求下快速地回傳正確結果。
+                        本網站另採用Spring Boot + Spring Security驗證使用者身份，並設計錯誤頁面(<a th:href="@{/error}">點我查看</a>)回應使用者錯誤的請求。
+                    </p>
+                    <p>
+                        <a th:href="@{/requestEnvelope}" class="btn btn-primary my-2">點我登入</a>
+                    </p>
+                </div>
+            </section>
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" th:src="@{/img/publish/img-spring-with-thymeleaf.png}"></img>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        本網站採用全註解方式配置Spring Boot，並架設於Amazon Web Service (AWS)上以利使用者瀏覽。
+                                        在前端頁面則是使用常用的Thymeleaf框架，不僅原生支援HTML 5，也能用MVC的方式進行渲染。另外，
+                                        為了開發dev版及production版本，亦採用@Profile來讀取外部properties以利切換資料庫來源。
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><a href="https://sdtimes.com/webdev/spring-releases-spring-boot-2-0/">Img Source</a></button>
+                                        </div>
+                                        <small class="text-muted"><a href="https://projects.spring.io/spring-boot/">Spring Boot</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" th:src="@{/img/publish/img-redis.png}"></img>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        現今網站不僅架構複雜，同時也要面對大量請求的封包。而對於進行商品搶購或是搶紅包的場景，Redis能把
+                                        資料暫存以利提供高速的數據讀取，來減少資料庫的壓力。本網站的搶紅包因需要在短時間內響應上千以上的
+                                        請求，故使用Redis這NoSQL資料庫提供健全、有效的服務。
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><a href="https://itw01.com/AOT5EX6.html">Img Source</a></button>
+                                        </div>
+                                        <small class="text-muted"><a href="https://redis.io">Redis.io</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" th:src="@{/img/publish/img-mybatis.jpg}"></img>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        使用MyBatis作為資料庫存取框架的一大好處是MyBatis能讓開發者自訂SQL，因而能準確定義SQL規則，
+                                        以利優化性能，同時也能加速開發，對於性能要求高、靈活的系統十分有利。MyBatis的映射模式也能以
+                                        面向對象的方式讀取和寫入資料，非常方便。
+
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"><a href="http://www.importnew.com/23949.html">Img Source</a></button>
+                                        </div>
+                                        <small class="text-muted"><a href="http://www.mybatis.org/mybatis-3/">MyBatis 3 Official</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
 </html>
