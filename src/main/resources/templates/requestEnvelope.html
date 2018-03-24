@@ -15,78 +15,91 @@
         <!-- angularJS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular-route.min.js"></script>
-
         <script type="text/javascript" th:src="@{/js/app.js}"></script>
+
+        <!-- icon -->
+        <link rel="stylesheet" th:href="@{/css/open-iconic/font/css/open-iconic-bootstrap.css}"></link>
     </head>
     <body ng-controller="SnatchEnvelopeController">
         <header>
-            <div class="collapse bg-dark" id="navbarHeader">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-8 col-md-7 py-4">
-                            <h4 class="text-white">About</h4>
-                            <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-                        </div>
-                        <div class="col-sm-4 offset-md-1 py-4">
-                            <h4 class="text-white">Contact</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                                <li><a href="#" class="text-white">Like on Facebook</a></li>
-                                <li><a href="#" class="text-white">Email me</a></li>
-                            </ul>
-                        </div>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About Me</h4>
+                        <p class="text-muted">
+                            英文名Makris，喜好嘗試新的事物。最近剛從行動端走向後端工程師，最近剛要退伍。雖然在網頁上開發經驗不多，
+                            但立志成為Java 後端高手。在後端領域對於系統架構特別有興趣，像是網站伸縮、性能、擴展性及安全等，
+                            希冀能在人生有限的時間內成為系統架構師。
+                            人生格言：Be Realistic, Demand Impossible
+                        </p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/MakrisHuang" class="text-white">Follow on Github</a></li>
+                            <li><a href="https://www.facebook.com/vallwesture.huang" class="text-white">Like on Facebook</a></li>
+                            <li><a href="mailto:vallwesture@gmail.com" class="text-white">Email me</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="navbar navbar-dark bg-dark box-shadow">
-                <div class="container d-flex justify-content-between">
-                    <a href="#" class="navbar-brand d-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                        <strong>Album</strong>
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
+        </div>
+        <div class="navbar navbar-dark bg-danger box-shadow">
+            <div class="container d-flex justify-content-between">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <span class="oi oi-envelope-open" style="margin-right: 10px"></span>
+                    <strong>Snatch Red Envelope</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
-        </header>
+        </div>
+    </header>
+        <br />
         <main role="main">
-            <section class="jumbotron text-center">
+            <section class="jumbotron-fluid text-center">
                 <div class="container">
-                    <h1 th:inline="text" class="jumbotron-heading">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-                    <form class="form-group">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <label for="user">使用者數量</label>
-                                        <input type="number" class="form-control" min="1" max="3"
-                                               name="numOfUser" id="user" ng-model="numOfUser"
-                                                ng-change="updateUsersInfo()"></input>
+                    <h1 th:inline="text" class="jumbotron-heading">歡迎, [[${#httpServletRequest.remoteUser}]]!</h1>
+                    <small>
+                        請設定使用者數量，以及每位使用者想要搶奪的紅包數量。設定完成後請按Start鍵，搶紅包的結果將會於下面展示出來。
+                        若搶奪的紅包數量大，亦有可能造成網頁回應較慢。
+                    </small>
+                    <br /><br />
+                    <div class="row">
+                        <!--<form class="form-group">-->
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <label for="user">使用者數量(Min = 1, Max = 3)</label>
+                                            <input type="number" class="form-control" min="1" max="3"
+                                                   name="numOfUser" id="user" ng-model="numOfUser"
+                                                    ng-change="updateUsersInfo()"></input>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <label for="redEnvelope">每位欲搶紅包數量 (Min = 2000, Max = 5000)</label>
+                                            <input type="number" class="form-control" min="2000" max="5000"
+                                                   name="numOfRedEnvelopeRequested" id="redEnvelope"
+                                                   ng-model="numOfRedEnvelopeRequested"
+                                                   ng-change="updateUsersInfo()"></input><br />
+                                        </div>
                                     </div>
                                 </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <label for="redEnvelope">每位欲搶紅包數量</label>
-                                        <input type="number" class="form-control" min="1000" max="10000"
-                                               name="numOfRedEnvelopeRequested" id="redEnvelope"
-                                               ng-model="numOfRedEnvelopeRequested"
-                                               ng-change="updateUsersInfo()"></input><br />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <br /><button type="button" class="btn btn-primary form-control" ng-click="start()">Start</button><br /><br /><br />
-                                <button type="button" class="btn btn-success form-control" ng-click="reset()">Reset</button><br />
-                                <!--<button type="button" class="btn btn-danger form-control" ng-click="logout()">Logout</button>-->
-                            </div>
+                        <!--</form>-->
+                        <div class="col-md-3">
+                            <form th:action="@{/logout}" method="post" >
+                                <button type="button" class="btn btn-primary form-control" ng-click="start()">Start</button><br /><br />
+                                <button type="button" class="btn btn-success form-control" ng-click="reset()">Reset</button><br /><br />
+                                <button type="submit" class="btn btn-danger form-control" value="Sign Out">Logout</button><br /><br />
+                            </form>
                         </div>
-                    </form>
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-danger" value="Sign Out">Logout</button>
-                    </form>
+                    </div>
+
+
                 </div>
             </section>
             <div class="py-5 bg-light">
@@ -100,7 +113,7 @@
                                             <button type="button" class="btn btn-sm btn-outline-secondary">Obtained: {{user.obtainedEnvelopes}}</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">Remaining: {{user.remainingEnvelopes}}</button>
                                         </div>
-                                        <small class="text-muted">Time elapsed: {{user.timeElapsed}}</small>
+                                        <small class="text-muted">Time elapsed for requesting 60% of envelopes: {{user.timeElapsed}}</small>
                                     </div>
                                     <hr />
                                     <ul ng-repeat="result in user.results">
