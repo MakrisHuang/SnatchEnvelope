@@ -23,10 +23,6 @@ app.controller('SnatchEnvelopeController', ['$scope', '$http', function($scope, 
     $scope.start = function(){
         $("input").prop('disabled', true);
         var userIds = $scope.generateRandomUserIds();
-        // dispatch different userIds to each user
-        // for (var j = 0; j < $scope.numOfUser; j+=$scope.numOfRedEnvelopeRequested){
-        //     $scope.users[j].userIds = userIds.slice(j, j+$scope.numOfRedEnvelopeRequested);
-        // }
 
         // set start time for each user
         $scope.users.forEach(function(user){
@@ -39,6 +35,13 @@ app.controller('SnatchEnvelopeController', ['$scope', '$http', function($scope, 
     $scope.reset = function(){
         $("input").prop('disabled', false);
         $scope.updateUsersInfo();
+
+        var resetUrl = "http://localhost:8080/resetRedisForSnatchEnvelope";
+        $http.get(resetUrl).then(function(response){
+           console.log("[resetRedis]: ");
+           console.log(response.data);
+           alert("重設Redis訊息：" + response.data["message"]);
+        });
     };
 
     $scope.snatchEnvelope = function(userIds){
@@ -53,15 +56,17 @@ app.controller('SnatchEnvelopeController', ['$scope', '$http', function($scope, 
                 var userIndex = Math.floor((userId - 1) / $scope.numOfRedEnvelopeRequested);
                 $scope.users[userIndex].results.push(response.data);
 
-                // update user info
-                $scope.users[userIndex].remainingEnvelopes -= 1;
-                $scope.users[userIndex].obtainedEnvelopes += 1;
+                if (response.data["data"] === true) {
+                    // update user info
+                    $scope.users[userIndex].remainingEnvelopes -= 1;
+                    $scope.users[userIndex].obtainedEnvelopes += 1;
 
-                // check if enveloped are all obtained
-                // if so, then record elapsed time
-                if ($scope.users[userIndex].remainingEnvelopes === 0){
-                    $scope.users[userIndex].timeElapsed =
-                        $scope.calculateTimeElapsed($scope.users[userIndex].timeStart)
+                    // check if enveloped are all obtained
+                    // if so, then record elapsed time
+                    if ($scope.users[userIndex].remainingEnvelopes === 0) {
+                        $scope.users[userIndex].timeElapsed =
+                            $scope.calculateTimeElapsed($scope.users[userIndex].timeStart)
+                    }
                 }
             });
         });
