@@ -6,6 +6,8 @@
       <module name="com.makris.web_test" target="1.8" />
       <module name="RequestEnvelop_main" target="1.8" />
       <module name="RequestEnvelop_test" target="1.8" />
+      <module name="RequestEnvelope_main" target="1.8" />
+      <module name="RequestEnvelope_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

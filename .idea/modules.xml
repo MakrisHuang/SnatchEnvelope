@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelop.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelop.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelop_main.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelop_main.iml" group="RequestEnvelop" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelop_test.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelop_test.iml" group="RequestEnvelop" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelope.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelope.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelope_main.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelope_main.iml" group="RequestEnvelope" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RequestEnvelope_test.iml" filepath="$PROJECT_DIR$/.idea/modules/RequestEnvelope_test.iml" group="RequestEnvelope" />
     </modules>
   </component>
 </project>

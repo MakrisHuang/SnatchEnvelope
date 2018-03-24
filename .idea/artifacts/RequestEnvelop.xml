@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="RequestEnvelop">
+  <artifact type="war" name="RequestEnvelop">
     <output-path>$PROJECT_DIR$/out/artifacts/RequestEnvelop</output-path>
-    <root id="root">
+    <root id="archive" name="RequestEnvelop.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="RequestEnvelop" />
@@ -38,7 +38,12 @@
           <element id="library" level="project" name="Gradle: org.springframework:spring-web:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: org.yaml:snakeyaml:1.17" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-web:1.3.3.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.9" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>

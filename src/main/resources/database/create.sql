@@ -36,3 +36,4 @@ CREATE TABLE UserSnatchEnvelope(
   CONSTRAINT UserSnatchEnvelope_User FOREIGN KEY (userId)
     REFERENCES User (id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
+

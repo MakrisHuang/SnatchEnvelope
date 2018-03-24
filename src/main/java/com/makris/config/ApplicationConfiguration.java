@@ -90,10 +90,11 @@ public class ApplicationConfiguration extends AsyncSupportConfigurer implements 
 //        return processor;
 //    }
 
+    @Profile("dev")
     @Bean
-    public BasicDataSource basicDataSource(){
+    public BasicDataSource devDataSource(){
         BasicDataSource bds = new BasicDataSource();
-        bds.setDriverClassName(env.getProperty("SPRING_DRIVER_NAME"));
+        bds.setDriverClassName(env.getProperty("SPRING_DRIVER_CLASSNAME"));
         String host = env.getProperty("SPRING_DATABASE_HOST");
         String port = env.getProperty("SPRING_DATABASE_PORT");
         String dbName = env.getProperty("SPRING_DATABASE_NAME");
@@ -107,12 +108,36 @@ public class ApplicationConfiguration extends AsyncSupportConfigurer implements 
         return bds;
     }
 
+    @Profile("production")
+    @Bean
+    public BasicDataSource productionDataSource(){
+        BasicDataSource bds = new BasicDataSource();
+        bds.setDriverClassName(System.getenv("SPRING_DRIVER_CLASSNAME"));
+        String host = System.getenv("SPRING_DATABASE_HOST");
+        String port = System.getenv("SPRING_DATABASE_PORT");
+        String dbName = System.getenv("SPRING_DATABASE_NAME");
+        String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+        logger.info("[jdbcUrl]: " + jdbcUrl);
+        bds.setUrl(jdbcUrl);
+        bds.setUsername(System.getenv("SPRING_DATASOURCE_USERNAME"));
+        bds.setPassword(System.getenv("SPRING_DATASOURCE_PASSWORD"));
+        bds.setMaxActive(255);
+        bds.setMaxIdle(5);
+        bds.setMaxWait(1000);
+        return bds;
+    }
+
     @Bean
     public SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException{
 
         SqlSessionFactoryBean sqlSessionFactoryBean =
                 new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(basicDataSource());
+        if (env.getProperty("spring.profiles.active").equals("dev")) {
+            sqlSessionFactoryBean.setDataSource(devDataSource());
+        }
+        if (env.getProperty("spring.profiles.active").equals("production")) {
+            sqlSessionFactoryBean.setDataSource(productionDataSource());
+        }
 
         // Set MyBatis Configuration file
         sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
@@ -130,7 +155,12 @@ public class ApplicationConfiguration extends AsyncSupportConfigurer implements 
     public DataSourceTransactionManager dataSourceTransactionManager(){
         DataSourceTransactionManager dstm =
                 new DataSourceTransactionManager();
-        dstm.setDataSource(this.basicDataSource());
+        if (env.getProperty("spring.profiles.active").equals("dev")) {
+            dstm.setDataSource(devDataSource());
+        }
+        if (env.getProperty("spring.profiles.active").equals("production")) {
+            dstm.setDataSource(productionDataSource());
+        }
         return dstm;
     }
 

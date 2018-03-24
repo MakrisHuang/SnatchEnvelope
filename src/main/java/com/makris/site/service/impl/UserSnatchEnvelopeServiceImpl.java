@@ -82,11 +82,13 @@ public class UserSnatchEnvelopeServiceImpl implements UserSnatchEnvelopeService{
 
     @Override
     public long grabEnvelopeByRedis(long envelopeId, long userId) {
+//        logger.info("[grabEnvelopeByRedis] envelopeId: " + envelopeId + ", userId: " + userId);
         // 當前搶紅包用戶和日期訊息
         String args = userId + "-" + System.currentTimeMillis();
         Long result = null;
         Jedis jedis = (Jedis)redisTemplate.getConnectionFactory().getConnection().getNativeConnection();
         try{
+//            logger.info("[grabEnvelopeByRedis] starting executing Redis script");
             // 如果腳本沒有加載過，那麼進行加載，這樣就會返回一個sha1編碼
             if (sha1 == null){
                 sha1 = jedis.scriptLoad(LuaScript);
@@ -94,15 +96,16 @@ public class UserSnatchEnvelopeServiceImpl implements UserSnatchEnvelopeService{
             // 執行腳本並返回結果
             Object res = jedis.evalsha(sha1, 1, envelopeId + "", args);
             result = (Long) res;
+//            logger.info("[grabEnvelopeByRedis] result: " + result);
             // 返回2時為最後一個紅包，此時將搶紅包資訊透過Async保存到資料庫中
             if (result == 2){
-                logger.info("紅包id: " + envelopeId);
+//                logger.info("[grabEnvelopeByRedis] 紅包id: " + envelopeId);
                 // 獲取單個小紅包金額
                 String unitPriceStr = jedis.hget("envelope_" + envelopeId, "unitPrice");
 
                 // 觸發保存資料庫操作
                 Double unitPrice = Double.parseDouble(unitPriceStr);
-//                logger.info("unitPrice: " + unitPrice);
+//                logger.info("[grabEnvelopeByRedis] unitPrice: " + unitPrice);
 //                logger.info("Thread_name = " + Thread.currentThread().getName());
                 redisEnvelopeService.saveUserSnatchEnvelopeByRedis(envelopeId, unitPrice);
             }
@@ -110,6 +113,7 @@ public class UserSnatchEnvelopeServiceImpl implements UserSnatchEnvelopeService{
             // 確保jedis順利關閉
             if (jedis != null && jedis.isConnected()){
                 jedis.close();
+//                logger.info("[grabEnvelopeByRedis] jedis is closed");
             }
         }
         return result;
