@@ -13,7 +13,7 @@
     </head>
     <body class="text-center">
         <form class="form-signin" th:action="@{/login}" method="post">
-            <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"></img>
+            <img class="mb-4" th:src="@{/img/publish/img-red-envelope.png}" alt="" width="72" height="101"></img>
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
             <div th:if="${param.error}">
                 Invalid username and password.
@@ -22,16 +22,16 @@
                 You have been logged out.
             </div>
             <label for="inputUserName" class="sr-only">User Name</label>
-            <input type="text" id="inputUserName" class="form-control" placeholder="User Name" required="" autofocus="" name="username"></input>
+            <input type="text" id="inputUserName" class="form-control" placeholder="Userame: user" value="user" required="" autofocus="" name="username"></input>
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" name="password"></input>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password: password" value="password" required="" name="password"></input>
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me</input>
                 </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+            <p class="mt-5 mb-3 text-muted">© Makris, 2017-2018</p>
         </form>
     </body>
 </html>
